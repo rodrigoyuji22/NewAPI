@@ -8,7 +8,7 @@ namespace NewAPI.Controllers
     public class UserController : ControllerBase
     {
         [HttpPost]
-        public IActionResult CadastrarUsuario(CreateUserDto dto) 
+        public IActionResult CadastrarUsuario(CreateUserDto dto)
         {
             throw new NotImplementedException();
         }
