@@ -16,7 +16,6 @@ public class UserRepository : IUserRepository
     {
         _userManager = userManager;
         _mapper = mapper;
-        _signInManager = signInManager;
     }
     
     public async Task<IdentityResult> RegisterAsync(CreateUserDto dto)
