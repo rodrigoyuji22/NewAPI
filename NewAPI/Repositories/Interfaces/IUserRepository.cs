@@ -5,5 +5,5 @@ namespace NewAPI.Repositories.Interfaces;
 
 public interface IUserRepository
 {
-    Task<IdentityResult> RegisterAsync(CreateUserDto dto);
+    Task<IdentityResult> CreateAsync(CreateUserDto dto);
 }

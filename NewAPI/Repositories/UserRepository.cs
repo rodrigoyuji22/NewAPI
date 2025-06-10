@@ -11,10 +11,8 @@ namespace NewAPI.Repositories;
 [UsedImplicitly]
 public class UserRepository(UserManager<User> userManager, IMapper mapper) : IUserRepository
 {
-    public async Task<IdentityResult> RegisterAsync(CreateUserDto dto)
+    public Task<IdentityResult> CreateAsync(CreateUserDto dto)
     {
-        var user = mapper.Map<User>(dto);
-        var result = await userManager.CreateAsync(user, dto.Password);
-        return result;
+        throw new NotImplementedException();
     }
 }

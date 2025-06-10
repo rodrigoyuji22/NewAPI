@@ -11,12 +11,13 @@ public class UserService(UserRepository userRepository, SignInManager<User> sign
    
     public async Task<IdentityResult> CreateAsync(CreateUserDto dto)
     {
-        return await userRepository.RegisterAsync(dto);
+        return await userRepository.CreateAsync(dto);
     }
 
     public async Task<string?> LoginAsync(LoginUserDto dto)
     {
         var result = await signInManager.PasswordSignInAsync(dto.Email, dto.Password, false, false);
+        // result stores a signInResult
         throw new NotImplementedException();
     }
 }
