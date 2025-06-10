@@ -3,23 +3,18 @@ using Microsoft.AspNetCore.Identity;
 using NewAPI.Dtos;
 using NewAPI.Entities;
 using NewAPI.Repositories.Interfaces;
+using JetBrains.Annotations;
 
 namespace NewAPI.Repositories;
 
-public class UserRepository : IUserRepository
+// removing the "never instantiated" warning due to services DI
+[UsedImplicitly]
+public class UserRepository(UserManager<User> userManager, IMapper mapper) : IUserRepository
 {
-    private UserManager<User> _userManager;
-    private IMapper _mapper;
-    public UserRepository(UserManager<User> userManager, IMapper mapper)
-    {
-        _userManager = userManager;
-        _mapper = mapper;
-    }
-    
     public async Task<IdentityResult> RegisterAsync(CreateUserDto dto)
     {
-        var user = _mapper.Map<User>(dto);
-        var result = await _userManager.CreateAsync(user, dto.Password);
+        var user = mapper.Map<User>(dto);
+        var result = await userManager.CreateAsync(user, dto.Password);
         return result;
     }
 }

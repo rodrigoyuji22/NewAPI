@@ -10,27 +10,29 @@ using NewAPI.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Db connection configuration
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(opts =>
 {
     opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
+
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();    
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddFluentValidationAutoValidation(); // integra o fluentvalidation ao pipeline de validacao automatica de modelos
-builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>(); // registra o validator
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
 
-// DI dos services
+// Services DI
 builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

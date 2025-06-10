@@ -6,27 +6,17 @@ using NewAPI.Repositories.Interfaces;
 
 namespace NewAPI.Services;
 
-public class UserService : IUserService
+public class UserService(UserRepository userRepository, SignInManager<User> signInManager) : IUserService
 {
-    private UserRepository _userRepository;
-    private UserManager<User> _userManager;
-    private SignInManager<User> _signInManager;
-
-    public UserService(UserRepository userRepository, UserManager<User> userManager, SignInManager<User> signInManager)
-    {
-        _userRepository = userRepository;
-        _userManager = userManager;
-        _signInManager = signInManager;
-    }
-    
+   
     public async Task<IdentityResult> CreateAsync(CreateUserDto dto)
     {
-        return await _userRepository.RegisterAsync(dto);
+        return await userRepository.RegisterAsync(dto);
     }
 
     public async Task<string?> LoginAsync(LoginUserDto dto)
     {
-        var result = await _signInManager.PasswordSignInAsync(dto.Email, dto.Password, false, false);
+        var result = await signInManager.PasswordSignInAsync(dto.Email, dto.Password, false, false);
         throw new NotImplementedException();
     }
 }

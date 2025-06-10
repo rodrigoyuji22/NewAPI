@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Identity;
 using NewAPI.Dtos;
 using NewAPI.Entities;
+using JetBrains.Annotations;
 
 namespace NewAPI.Validators;
 
+// removing the "never instantiated" warning due to FluentValidations DI
+[UsedImplicitly]
 public class UserValidator : AbstractValidator<CreateUserDto>
 {
     
