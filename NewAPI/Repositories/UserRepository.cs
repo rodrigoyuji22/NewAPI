@@ -10,9 +10,7 @@ public class UserRepository : IUserRepository
 {
     private UserManager<User> _userManager;
     private IMapper _mapper;
-    private SignInManager<User> _signInManager;
-
-    public UserRepository(UserManager<User> userManager, IMapper mapper, SignInManager<User> signInManager)
+    public UserRepository(UserManager<User> userManager, IMapper mapper)
     {
         _userManager = userManager;
         _mapper = mapper;

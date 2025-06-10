@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using NewAPI.Data;
 using NewAPI.Entities;
+using NewAPI.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,10 @@ builder.Services.AddDbContext<AppDbContext>(opts =>
     opts.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();    
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddFluentValidationAutoValidation(); // integra o fluentvalidation ao pipeline de validacao automatica de modelos
+builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>(); // registra o validator
+
 
 var app = builder.Build();
 
