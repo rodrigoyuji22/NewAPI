@@ -13,10 +13,17 @@ public class UserValidator : AbstractValidator<CreateUserDto>
     public UserValidator(UserManager<User> userManager)
     {
         _userManager = userManager;
+        
+        RuleFor(x => x.Nome).NotEmpty().WithMessage("Please enter a name.").Length(5, 30).WithMessage("Name must be between 5 and 30 characters");
+        
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("Email is required")
             .EmailAddress().WithMessage("Email is invalid")
             .MustAsync(BeUniqueEmail).WithMessage("Email already exists");
+
+        RuleFor(x => x.Password)
+            .NotEmpty().WithMessage("Password is required");
+        RuleFor(x => x.ConfirmPassword).Equal(x => x.Password).WithMessage("Passwords do not match");
     }
 
     private async Task<bool> BeUniqueEmail(string email, CancellationToken ct)

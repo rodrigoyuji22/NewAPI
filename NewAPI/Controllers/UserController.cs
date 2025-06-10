@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NewAPI.Dtos;
+using NewAPI.Repositories.Interfaces;
 
 namespace NewAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class UserController(IUserService userService) : ControllerBase
     {
         [HttpPost]
-        public IActionResult CadastrarUsuario(CreateUserDto dto)
+        public async Task<IActionResult> RegisterAsync(CreateUserDto dto)
         {
-            throw new NotImplementedException();
+            var result =  await userService.CreateAsync(dto);
+            return Ok(result);
         }
     }
 }

@@ -4,6 +4,8 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using NewAPI.Data;
 using NewAPI.Entities;
+using NewAPI.Repositories.Interfaces;
+using NewAPI.Services;
 using NewAPI.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +13,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -24,6 +25,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddFluentValidationAutoValidation(); // integra o fluentvalidation ao pipeline de validacao automatica de modelos
 builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>(); // registra o validator
 
+// DI dos services
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

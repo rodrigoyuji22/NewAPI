@@ -21,13 +21,6 @@ public class UserService : IUserService
     
     public async Task<IdentityResult> CreateAsync(CreateUserDto dto)
     {
-        var existingUser = await _userManager.FindByEmailAsync(dto.Email);
-        if(existingUser is not null)
-            return IdentityResult.Failed(new IdentityError
-            {
-                Code = "EmailAlreadyInUse",
-                Description = "User already exists"
-            });
         return await _userRepository.RegisterAsync(dto);
     }
 
