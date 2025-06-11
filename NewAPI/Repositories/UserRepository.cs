@@ -11,8 +11,13 @@ namespace NewAPI.Repositories;
 [UsedImplicitly]
 public class UserRepository(UserManager<User> userManager, IMapper mapper) : IUserRepository
 {
-    public Task<IdentityResult> CreateAsync(CreateUserDto dto)
+    public async Task<IdentityResult> CreateAsync(User user, string password)
     {
-        throw new NotImplementedException();
+        return await userManager.CreateAsync(user, password);
+    }
+
+    public async Task<User?> GetUserByEmailAsync(string email)
+    {
+        return await userManager.FindByEmailAsync(email);
     }
 }

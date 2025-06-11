@@ -1,6 +1,8 @@
-﻿namespace NewAPI.Repositories.Interfaces;
+﻿using NewAPI.Entities;
+
+namespace NewAPI.Repositories.Interfaces;
 
 public interface ITokenService
 {
-    string GenerateToken();
+    string GenerateToken(User user);
 }
