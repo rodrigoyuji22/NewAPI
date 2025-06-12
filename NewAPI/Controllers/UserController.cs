@@ -8,11 +8,19 @@ namespace NewAPI.Controllers
     [Route("[controller]")]
     public class UserController(IUserService userService) : ControllerBase
     {
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(CreateUserDto dto)
         {
             var result =  await userService.CreateAsync(dto);
             return Ok(result);
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginAsync(LoginUserDto dto)
+        {
+            var token = await userService.LoginAsync(dto);
+            return Ok(token);
+        }
+        
     }
 }

@@ -1,9 +1,11 @@
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using NewAPI.Data;
 using NewAPI.Entities;
+using NewAPI.Repositories;
 using NewAPI.Repositories.Interfaces;
 using NewAPI.Services;
 using NewAPI.Validators;
@@ -26,9 +28,12 @@ builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AppD
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
+builder.Services.AddScoped<JwtSecurityTokenHandler>();
 
 // Services DI
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

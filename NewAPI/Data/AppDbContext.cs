@@ -6,5 +6,5 @@ namespace NewAPI.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext>options) : IdentityDbContext<User>(options)
 {
-    DbSet<User> users;
+
 }

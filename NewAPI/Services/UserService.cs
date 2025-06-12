@@ -2,12 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using NewAPI.Dtos;
 using NewAPI.Entities;
-using NewAPI.Repositories;
 using NewAPI.Repositories.Interfaces;
 
 namespace NewAPI.Services;
 
-public class UserService(UserRepository userRepository, SignInManager<User> signInManager, IMapper mapper) : IUserService
+public class UserService(IUserRepository userRepository ,SignInManager<User> signInManager, IMapper mapper, ITokenService tokenService) : IUserService
 {
    
     public async Task<IdentityResult> CreateAsync(CreateUserDto dto)
@@ -19,7 +18,11 @@ public class UserService(UserRepository userRepository, SignInManager<User> sign
     public async Task<string?> LoginAsync(LoginUserDto dto)
     {
         var result = await signInManager.PasswordSignInAsync(dto.Email, dto.Password, false, false);
-        // result stores a signInResult
-        throw new NotImplementedException();
+        if (!result.Succeeded)
+        {
+            throw new ApplicationException("Invalid username or password");
+        }
+        var validUser = await userRepository.GetUserByEmailAsync(dto.Email);
+        return tokenService.GenerateToken(validUser!);
     }
 }

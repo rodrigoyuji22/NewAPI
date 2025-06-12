@@ -4,9 +4,13 @@ namespace NewAPI.Dtos
 {
     public class CreateUserDto
     {
-        public string Nome { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
+        [Required]
+        public string Nome { get; set; } =  string.Empty;
+        [Required]
+        public string Email { get; set; } = string.Empty;
+        [Required]
+        public string Password { get; set; } = string.Empty;
+        [Required]
+        public string ConfirmPassword { get; set; } = string.Empty;
     }
 }
