@@ -6,5 +6,6 @@ namespace NewAPI.Repositories.Interfaces;
 public interface IUserRepository
 {
     Task<IdentityResult> CreateAsync(User user, string password);
-    Task<User?> GetUserByEmailAsync(string email);
+    Task<User?> GetByNameAsync(string email);
+    Task <bool> BeUniqueEmail(string email);
 }

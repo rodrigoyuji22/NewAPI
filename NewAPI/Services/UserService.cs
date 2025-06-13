@@ -11,18 +11,21 @@ public class UserService(IUserRepository userRepository ,SignInManager<User> sig
    
     public async Task<IdentityResult> CreateAsync(CreateUserDto dto)
     {
+        if(await userRepository.BeUniqueEmail(dto.Email) == false)
+            throw new ApplicationException("Email already exists");
+        
         var user = mapper.Map<User>(dto);
         return await userRepository.CreateAsync(user, dto.Password);
     }
 
     public async Task<string?> LoginAsync(LoginUserDto dto)
     {
-        var result = await signInManager.PasswordSignInAsync(dto.Email, dto.Password, false, false);
+        var result = await signInManager.PasswordSignInAsync(dto.UserName, dto.Password, false, false);
         if (!result.Succeeded)
         {
             throw new ApplicationException("Invalid username or password");
         }
-        var validUser = await userRepository.GetUserByEmailAsync(dto.Email);
+        var validUser = await userRepository.GetByNameAsync(dto.UserName);
         return tokenService.GenerateToken(validUser!);
     }
 }

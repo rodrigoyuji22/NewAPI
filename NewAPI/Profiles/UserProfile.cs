@@ -8,6 +8,6 @@ public class UserProfile : Profile
 {
     public UserProfile()
     {
-        CreateMap<CreateUserDto, User>();
+        CreateMap<CreateUserDto, User>().ForMember(destiny => destiny.UserName, opt => opt.MapFrom(src => src.UserName));
     }
 }

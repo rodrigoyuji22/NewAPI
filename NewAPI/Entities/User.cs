@@ -4,5 +4,5 @@ namespace NewAPI.Entities;
 
 public class User : IdentityUser
 {
-    public DateTime BirthDate { get; set; }
+    // public DateTime BirthDate { get; set; }
 }
