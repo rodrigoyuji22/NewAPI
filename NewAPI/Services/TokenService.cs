@@ -7,11 +7,11 @@ using NewAPI.Repositories.Interfaces;
 
 namespace NewAPI.Services;
 
-public class TokenService(JwtSecurityTokenHandler handler) : ITokenService
+public class TokenService(JwtSecurityTokenHandler handler, IConfiguration configuration) : ITokenService
 {
     public string GenerateToken(User user)
     {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ew54rw8(7,nb7u9342@fh2340oghno0w(e"));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["SymmetricSecurityKey"]!));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         
         var claims = new List<Claim>
