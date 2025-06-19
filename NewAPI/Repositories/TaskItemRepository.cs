@@ -9,28 +9,30 @@ public class TaskItemRepository(AppDbContext context) : ITaskItemRepository
 {
     public async Task<TaskItem> CreateAsync(TaskItem? taskItem)
     {
-        context.TaskItems.Add(taskItem);
+        context.TaskItems.Add(taskItem!);
         await context.SaveChangesAsync();
         return taskItem!;
     }
 
     public async Task<TaskItem?> GetByIdAsync(Guid id)
     {
-        return await context.TaskItems.FirstOrDefaultAsync(taskItem => taskItem != null && taskItem.Id == id);
+        return await context.TaskItems.FirstOrDefaultAsync(taskItem => taskItem.Id == id);
     }
 
-    public Task<IEnumerable<TaskItem>> GetAllAsync(User user)
+    public async Task<IEnumerable<TaskItem>> GetAllAsync(User user)
     {
-        throw new NotImplementedException();
+        return await context.TaskItems.Where(x => x.UserId == user.Id).ToListAsync();
     }
 
-    public Task<TaskItem> UpdateAsync(TaskItem task)
+    public async Task<int> UpdateAsync(TaskItem task)
     {
-        throw new NotImplementedException();
+        context.TaskItems.Update(task);
+        return await context.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(TaskItem task)
+    public async Task<int> DeleteAsync(TaskItem task)
     {
-        throw new NotImplementedException();
+        context.TaskItems.Remove(task);
+        return await context.SaveChangesAsync();
     }
 }
