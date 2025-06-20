@@ -5,9 +5,9 @@ namespace NewAPI.Repositories.Interfaces;
 
 public interface ITaskItemService
 {
-    Task<TaskItem> CreateTaskItemAsync(CreateTaskItemDto dto);
+    Task<TaskItem> CreateTaskItemAsync(CreateTaskItemDto dto, string userId);
     Task<IEnumerable<ReadTaskItemDto>> GetAllAsync(User user);
     Task<ReadTaskItemDto> GetByIdAsync(Guid id);
-    Task <int> UpdateAsync (TaskItem task);
-    Task<int> DeleteAsync(TaskItem task);
+    Task <bool> UpdateAsync (UpdateTaskItemDto dto, string userId);
+    Task<bool> DeleteAsync(Guid id, string userId);
 }

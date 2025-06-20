@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NewAPI.Data;
+using NewAPI.Dtos;
 using NewAPI.Entities;
 using NewAPI.Repositories.Interfaces;
 

@@ -7,9 +7,11 @@ namespace NewAPI.Services;
 
 public class TaskItemService(ITaskItemRepository repository, IMapper mapper) : ITaskItemService
 {
-    public async Task<TaskItem> CreateTaskItemAsync(CreateTaskItemDto dto)
+    public async Task<TaskItem> CreateTaskItemAsync(CreateTaskItemDto dto, string userId)
     {
         var task = mapper.Map<TaskItem>(dto);
+        task.UserId = userId;
+        task.Done = false;
         return await repository.CreateAsync(task);
     }
 
@@ -26,14 +28,22 @@ public class TaskItemService(ITaskItemRepository repository, IMapper mapper) : I
         return mapper.Map<ReadTaskItemDto>(result);
     }
 
-    public async Task<int> UpdateAsync(TaskItem task)
+    public async Task<bool> UpdateAsync(UpdateTaskItemDto dto, string userId)
     {
-        throw new NotImplementedException();
-        // return await repository.UpdateAsync(task);
+        var task = await repository.GetByIdAsync(dto.Id);
+        if (task == null || task.UserId != userId)
+            return false;
+        mapper.Map(dto, task);
+        var result = await repository.UpdateAsync(task);
+        return result > 0; // UpdateAsync returns int of how many lines were changed, result > 0 is a comparision
     }
 
-    public Task<int> DeleteAsync(TaskItem task) 
-    {
-        throw new NotImplementedException();
+    public async Task<bool> DeleteAsync(Guid id, string  userId)
+    {  
+        var task = await repository.GetByIdAsync(id);
+        if (task == null || task.UserId != userId)
+            return false;
+        var result = await repository.DeleteAsync(task);
+        return result > 0;
     }
 }
