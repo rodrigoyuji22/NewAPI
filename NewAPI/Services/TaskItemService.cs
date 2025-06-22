@@ -10,6 +10,8 @@ public class TaskItemService(ITaskItemRepository repository, IMapper mapper) : I
     public async Task<TaskItem> CreateTaskItemAsync(CreateTaskItemDto dto, string userId)
     {
         var task = mapper.Map<TaskItem>(dto);
+        if(task is null)
+            throw new NullReferenceException("Failed to create task");
         task.UserId = userId;
         task.Done = false;
         return await repository.CreateAsync(task);
@@ -18,6 +20,8 @@ public class TaskItemService(ITaskItemRepository repository, IMapper mapper) : I
     public async Task<IEnumerable<ReadTaskItemDto>> GetAllAsync(User user)
     {
         var result = await repository.GetAllAsync(user);
+        if (result is null)
+            throw new NullReferenceException("No tasks found");
         var finalResult = mapper.Map<IEnumerable<ReadTaskItemDto>>(result);
         return finalResult;
     }
