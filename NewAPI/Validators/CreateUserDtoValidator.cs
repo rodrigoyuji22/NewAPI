@@ -19,6 +19,6 @@ public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
 
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("Password is required");
-        RuleFor(x => x.ConfirmPassword).Equal(x => x.Password).WithMessage("Passwords do not match");
+        RuleFor(x => x.ConfirmPassword).Equal(x => x.Password).WithMessage("Passwords does not match");
     }
 }
