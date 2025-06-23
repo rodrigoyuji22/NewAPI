@@ -6,9 +6,9 @@ namespace NewAPI.Validators;
 
 // removing the "never instantiated" warning due to FluentValidations DI
 [UsedImplicitly]
-public class UserValidator : AbstractValidator<CreateUserDto>
+public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
 {
-    public UserValidator()
+    public CreateUserDtoValidator()
     {
         
         RuleFor(x => x.UserName).NotEmpty().WithMessage("Please enter a username.").Length(5, 30).WithMessage("Username must be between 5 and 30 characters");
