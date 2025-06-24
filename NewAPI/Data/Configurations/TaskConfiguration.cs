@@ -18,8 +18,6 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskItem>
         
         builder.Property(x => x.UserId).IsRequired();
         
-        builder.Property(x => x.TimeLimit).IsRequired();
-        
         // entity relation
         builder.HasOne(x => x.User).WithMany(x => x.Tasks).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
     }

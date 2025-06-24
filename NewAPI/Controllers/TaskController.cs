@@ -11,9 +11,9 @@ namespace NewAPI.Controllers;
 public class TaskController(ITaskItemService taskItemService) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> CreateTaskItemAsync(CreateTaskItemDto dto)
+    public async Task<IActionResult> CreateTaskItemAsync([FromBody]CreateTaskItemDto dto)
     {
-        var userId = User.GetUserById();
+        var userId = User.GetUserId();
         if (userId is null)
             return Unauthorized();
         var result = await taskItemService.CreateTaskItemAsync(dto, userId);

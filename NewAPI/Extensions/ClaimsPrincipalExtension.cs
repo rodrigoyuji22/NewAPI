@@ -4,7 +4,7 @@ namespace NewAPI.Extensions;
 
 public static class ClaimsPrincipalExtension
 {
-    public static string? GetUserById(this ClaimsPrincipal user)
+    public static string? GetUserId(this ClaimsPrincipal user)
     {
         return user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     }
