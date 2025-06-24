@@ -29,4 +29,23 @@ public class TaskController(ITaskItemService taskItemService) : ControllerBase
         var result = await taskItemService.GetAllAsync(userId);
         return Ok(result);
     }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateTaskItemAsync([FromBody] UpdateTaskItemDto dto)
+    {
+        var userId = User.GetUserId();
+        if (userId is null)
+            return Unauthorized();
+        await taskItemService.UpdateAsync(dto,userId);
+        return NoContent();
+    }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteTaskItemAsync(Guid id)
+    {
+        var userId = User.GetUserId();
+        if (userId is null)
+            return Unauthorized();
+        await taskItemService.DeleteAsync(id,  userId);
+        return NoContent();
+    }
 }
