@@ -20,9 +20,9 @@ public class TaskItemRepository(AppDbContext context) : ITaskItemRepository
         return await context.TaskItems.FirstOrDefaultAsync(taskItem => taskItem.Id == id);
     }
 
-    public async Task<IEnumerable<TaskItem>> GetAllAsync(User user)
+    public async Task<IEnumerable<TaskItem>> GetAllAsync(string userId)
     {
-        return await context.TaskItems.Where(x => x.UserId == user.Id).ToListAsync();
+        return await context.TaskItems.Where(x => x.UserId == userId).ToListAsync();
     }
 
     public async Task<int> UpdateAsync(TaskItem task)

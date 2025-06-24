@@ -19,4 +19,14 @@ public class TaskController(ITaskItemService taskItemService) : ControllerBase
         var result = await taskItemService.CreateTaskItemAsync(dto, userId);
         return Ok(result);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetTaskItemAsync()
+    {
+        var userId = User.GetUserId();
+        if (userId is null)
+            return Unauthorized();
+        var result = await taskItemService.GetAllAsync(userId);
+        return Ok(result);
+    }
 }

@@ -17,9 +17,9 @@ public class TaskItemService(ITaskItemRepository repository, IMapper mapper) : I
         return await repository.CreateAsync(task);
     }
 
-    public async Task<IEnumerable<ReadTaskItemDto>> GetAllAsync(User user)
+    public async Task<IEnumerable<ReadTaskItemDto>> GetAllAsync(string userId)
     {
-        var result = await repository.GetAllAsync(user);
+        var result = await repository.GetAllAsync(userId);
         if (result is null)
             throw new NullReferenceException("No tasks found");
         var finalResult = mapper.Map<IEnumerable<ReadTaskItemDto>>(result);
