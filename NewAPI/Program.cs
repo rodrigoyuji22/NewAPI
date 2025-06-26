@@ -41,6 +41,8 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 
+// CORS policy
+builder.Services.AddCors(x => x.AddPolicy("Policy", corsPolicyBuilder => corsPolicyBuilder.AllowAnyHeader().AllowCredentials().AllowAnyMethod().WithOrigins("http://localhost:3000", "https://localhost:3000")));
 
 // DI for application packages and services
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();    
@@ -66,7 +68,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors(opts => opts.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000", "https://localhost:3000"));
+app.UseCors("Policy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
