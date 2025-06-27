@@ -1,6 +1,8 @@
+import { Typography } from "@mui/material"
+
 function App() {
   return (
-    <h3 className="app" style={{color: 'red'}}>Tiddo</h3>
+    <Typography variant='h3'>Tiddo</Typography>
   )
 }
 
