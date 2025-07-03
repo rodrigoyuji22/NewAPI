@@ -12,7 +12,9 @@ namespace NewAPI.Controllers
         public async Task<IActionResult> RegisterAsync(CreateUserDto dto)
         {
             var result =  await userService.CreateAsync(dto);
-            return Ok(result);
+            if (result.Succeeded)
+                return Ok(result);
+            return BadRequest(result);
         }
 
         [HttpPost("login")]
