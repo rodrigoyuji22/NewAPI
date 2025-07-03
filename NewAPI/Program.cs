@@ -48,6 +48,10 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateUserDtoValidator>();
 builder.Services.AddScoped<JwtSecurityTokenHandler>();
+builder.Services.AddCors(x => x.AddPolicy("Policy", corsPolicyBuilder =>
+{
+    corsPolicyBuilder.AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:3000", "https://localhost:3000");
+}));
 
 // Interfaces injection
 builder.Services.AddScoped<ITaskItemService, TaskItemService>();
@@ -66,7 +70,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors(opts => opts.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000", "https://localhost:3000"));
+app.UseCors("Policy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
